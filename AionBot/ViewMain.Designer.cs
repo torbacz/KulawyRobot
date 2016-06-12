@@ -32,6 +32,7 @@
             this.timerReadMemory = new System.Windows.Forms.Timer(this.components);
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabLogin = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.gbAccount = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.lblPassword = new System.Windows.Forms.Label();
@@ -82,7 +83,6 @@
             this.textBoxX = new System.Windows.Forms.TextBox();
             this.btnRemoveWaypoint = new System.Windows.Forms.Button();
             this.btnAddWaypoint = new System.Windows.Forms.Button();
-            this.pictureDrawing = new System.Windows.Forms.PictureBox();
             this.dGVWaypoints = new System.Windows.Forms.DataGridView();
             this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colX = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -95,8 +95,6 @@
             this.tabLogs = new System.Windows.Forms.TabPage();
             this.rtbLogs = new System.Windows.Forms.RichTextBox();
             this.timerAutoLogIn = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl.SuspendLayout();
             this.tabLogin.SuspendLayout();
             this.gbAccount.SuspendLayout();
@@ -105,10 +103,8 @@
             this.gbCharacterInformation.SuspendLayout();
             this.tabWaypoints.SuspendLayout();
             this.gbWaypoints.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureDrawing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dGVWaypoints)).BeginInit();
             this.tabLogs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // timerReadMemory
@@ -130,7 +126,6 @@
             // 
             // tabLogin
             // 
-            this.tabLogin.Controls.Add(this.pictureBox1);
             this.tabLogin.Controls.Add(this.button1);
             this.tabLogin.Controls.Add(this.gbAccount);
             this.tabLogin.Controls.Add(this.gbGameLogin);
@@ -141,6 +136,16 @@
             this.tabLogin.TabIndex = 0;
             this.tabLogin.Text = "Login";
             this.tabLogin.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(639, 35);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // gbAccount
             // 
@@ -484,7 +489,6 @@
             // tabWaypoints
             // 
             this.tabWaypoints.Controls.Add(this.gbWaypoints);
-            this.tabWaypoints.Controls.Add(this.pictureDrawing);
             this.tabWaypoints.Controls.Add(this.dGVWaypoints);
             this.tabWaypoints.Location = new System.Drawing.Point(4, 22);
             this.tabWaypoints.Name = "tabWaypoints";
@@ -658,14 +662,6 @@
             this.btnAddWaypoint.UseVisualStyleBackColor = true;
             this.btnAddWaypoint.Click += new System.EventHandler(this.btnAddWaypoint_Click);
             // 
-            // pictureDrawing
-            // 
-            this.pictureDrawing.Location = new System.Drawing.Point(773, 356);
-            this.pictureDrawing.Name = "pictureDrawing";
-            this.pictureDrawing.Size = new System.Drawing.Size(249, 250);
-            this.pictureDrawing.TabIndex = 18;
-            this.pictureDrawing.TabStop = false;
-            // 
             // dGVWaypoints
             // 
             this.dGVWaypoints.AllowUserToAddRows = false;
@@ -768,24 +764,6 @@
             this.timerAutoLogIn.Interval = 10000;
             this.timerAutoLogIn.Tick += new System.EventHandler(this.timerAutoLogIn_Tick);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(639, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(420, 78);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(530, 473);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
             // ViewMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -806,10 +784,8 @@
             this.tabWaypoints.ResumeLayout(false);
             this.gbWaypoints.ResumeLayout(false);
             this.gbWaypoints.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureDrawing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dGVWaypoints)).EndInit();
             this.tabLogs.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -831,7 +807,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colFly;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRest;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRestFor;
-        private System.Windows.Forms.PictureBox pictureDrawing;
         private System.Windows.Forms.Timer timerAutoLogIn;
         private System.Windows.Forms.GroupBox gbAccount;
         private System.Windows.Forms.TextBox textBox2;
@@ -848,7 +823,6 @@
         private System.Windows.Forms.ComboBox cBCharacterPosition;
         private System.Windows.Forms.Button btnShowPathDialog;
         private System.Windows.Forms.TextBox tBGamePath;
-        private System.Windows.Forms.CheckBox cbEnableAutoPin;
         private System.Windows.Forms.TextBox tbPin;
         private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.TextBox tbLogin;
@@ -882,7 +856,7 @@
         private System.Windows.Forms.Button btnRemoveWaypoint;
         private System.Windows.Forms.Button btnAddWaypoint;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox cbEnableAutoPin;
     }
 }
 

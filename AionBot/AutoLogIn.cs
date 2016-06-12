@@ -8,6 +8,9 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
+//Wypieprza sie na szukaniu pin buttonów, nie znajduje ich
+//Ulepszyć system czekania to znaczy czekać aż znajdzie przycisk zamiast wprost usypiać wątek
+
 namespace AionBot
 {
     public static class AutoLogIn
@@ -260,7 +263,7 @@ namespace AionBot
 
             //Kliknij postać
             System.Threading.Thread.Sleep(5000);
-            mouseClick(660, 190);
+            mouseClick(window.left + 660, window.top + 190);
             //kliknij start
             System.Threading.Thread.Sleep(1000);
             bitmapMain = getWindowSS("AION Client");

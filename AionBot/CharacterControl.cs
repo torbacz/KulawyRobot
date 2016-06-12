@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//Nie działa wszystko
+
 namespace AionBot
 {
     public static class CharacterControl

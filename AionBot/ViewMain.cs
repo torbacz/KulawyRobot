@@ -9,6 +9,11 @@ using System.Xml;
 using System.Xml.Serialization;
 using static System.Net.Mime.MediaTypeNames;
 
+//Otwieranie waypointów z pliku
+//Sprawdzanie przy autologowaniu czy dane zostały wprowadzone
+//Ulepszenie wyświetlania wartości na/obok progress barów
+//showpath dialog filtrowanie do gameforge clienta
+
 namespace AionBot
 {
     public partial class ViewMain : Form, IMain
@@ -24,6 +29,7 @@ namespace AionBot
 
         IntPtr openedProcessHandle;
         Process process = null;
+
         public ViewMain()
         {
             InitializeComponent();
@@ -132,25 +138,6 @@ namespace AionBot
             textBoxY.Text = y_cur.ToString();
             textBoxZ.Text = z_cur.ToString();
 
-        }
-        public void drawTriangle()
-        {
-            float x_cur = ReadMemory.Instance.x(openedProcessHandle)/10;
-            float y_cur = ReadMemory.Instance.y(openedProcessHandle)/10;
-            float rotation = ReadMemory.Instance.rotation(openedProcessHandle);
-
-            float x_to = x_cur + 30;
-            float y_to = y_cur + 20;
-
-            Graphics drawaarea = pictureDrawing.CreateGraphics();
-            Pen pen = new Pen(Color.Black);
-            Pen penRotation = new Pen(Color.Red);
-
-            drawaarea.DrawLine(pen, x_cur, y_cur, x_to, y_to);
-            drawaarea.DrawLine(pen, x_cur, y_cur, x_cur, y_to);
-            drawaarea.DrawLine(pen, x_cur, y_to, x_to, y_to);
-
-            drawaarea.DrawLine(penRotation, x_cur, y_cur, 10, 10);
         }
 
         public void setLog(string text, bool isError)
@@ -364,7 +351,6 @@ namespace AionBot
             {
                 //jeżeli weryfikacja uzytkowniak sie powiedzie
                 gbGameLogin.Enabled = true;
-                gbWaypoints.Enabled = true;
             }
             else
             {
