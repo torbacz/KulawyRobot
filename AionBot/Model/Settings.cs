@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AionBot
+﻿namespace AionBot.Model
 {
     public class Settings
     {
@@ -30,9 +24,8 @@ namespace AionBot
         public string login;
         public string password;
         public bool EnableAutoLogIn;
-        public string PIN;
-        public bool EnableAutoPin;
-        public string charaterPosition;
+        public int PIN;
+        public int charaterPosition;
         public string gamePath;
 
         public int login_textBox_x;

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 //Nie działa wszystko
 
-namespace AionBot
+namespace AionBot.Control
 {
     public static class CharacterControl
     {

@@ -16,7 +16,7 @@ namespace AionBot
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ViewMain());
+            Application.Run(new AionBot.View.ViewMain());
         }
     }
 }

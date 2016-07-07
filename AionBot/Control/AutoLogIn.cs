@@ -11,7 +11,7 @@ using System.Windows.Forms;
 //Wypieprza sie na szukaniu pin buttonów, nie znajduje ich
 //Ulepszyć system czekania to znaczy czekać aż znajdzie przycisk zamiast wprost usypiać wątek
 
-namespace AionBot
+namespace AionBot.Control
 {
     public static class AutoLogIn
     {
@@ -31,7 +31,7 @@ namespace AionBot
         private const uint MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const uint MOUSEEVENTF_RIGHTUP = 0x10;
 
-        private static IMain view { get; set; }
+        private static AionBot.View.IMain view { get; set; }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct Rect
@@ -42,7 +42,7 @@ namespace AionBot
             public int bottom;
         }
 
-        public static void setView(IMain pView)
+        public static void setView(View.IMain pView)
         {
             view = pView;
         }
@@ -53,159 +53,22 @@ namespace AionBot
             public int x;
             public int y;
         }
-        private struct buttonStart
-        {
-            public int x;
-            public int y;
-        }
 
         private static List<pinButton> listaPin;
 
         public static void startGame(string path)
         {
-            
             try
             {
                 Process.Start(path);
             }
             catch
             {
-                view.setLog("Failed to start GameForge Launcher", true);
+                view.setLog("Failed to start AION", true);
                 return;
             }
-
-            IntPtr hWnd = IntPtr.Zero;
-            string wName = "Gameforge";
-            bool stopTrying = false;
-            DateTime time = DateTime.Now;
-
-            while (!stopTrying)
-            {
-                foreach (Process pList in Process.GetProcesses())
-                {
-                    if (pList.MainWindowTitle.Contains(wName))
-                    {
-                        hWnd = pList.MainWindowHandle;
-                        view.setLog("Gameforge Live found", false);
-                        stopTrying = true;
-                        startGameGF(hWnd);
-                        return;
-
-                    }
-                }
-                if (DateTime.Now.Subtract(time).Milliseconds > 10000)
-                {
-                    stopTrying = true;
-                    view.setLog("Gameforge Live not found - timeout", true);
-                    return;
-                }
-            }
         }
-        private static void startGameGF(IntPtr pHwnd)
-        {
-            Thread.Sleep(5000);
-            var button = new buttonStart();
-            Rectangle location = Rectangle.Empty;
-            Rect window = new Rect();
 
-            GetWindowRect(pHwnd,ref window);
-
-            string sciezka_button = "img\\gameforge_play.png";
-
-            Bitmap bitmapButton = new Bitmap(sciezka_button);
-            Bitmap bitmapMain = getWindowSS("Gameforge");
-
-            location = autoSearchBitmap(bitmapButton, bitmapMain);
-
-            button.x = (location.X + location.Width / 2) + window.left;
-            button.y = (location.Y + location.Height / 2) + window.top;
-            mouseClick(button.x, button.y);
-
-            if (location.X == 0 && location.Y == 0)
-            {
-                view.setLog("Gameforge Live 'Play button' not found", true);
-                return;
-            }
-
-            IntPtr hWnd = IntPtr.Zero;
-            string wName = "AION Launcher";
-            bool stopTrying = false;
-            DateTime time = DateTime.Now;
-
-            while (!stopTrying)
-            {
-                foreach (Process pList in Process.GetProcesses())
-                {
-                    if (pList.MainWindowTitle.Contains(wName))
-                    {
-                        hWnd = pList.MainWindowHandle;
-                        view.setLog("NCLauncher found", false);
-                        StartGameNC(hWnd);
-                        stopTrying = true;
-                        return;
-                    }
-                }
-                if (DateTime.Now.Subtract(time).Milliseconds > 10000)
-                {
-                    stopTrying = true;
-                    view.setLog("NCLauncher not found - timeout", true);
-                    return;
-                }
-            }
-
-        }
-        private static void StartGameNC(IntPtr pHwnd)
-        {
-            var button = new buttonStart();
-            Rectangle location = Rectangle.Empty;
-
-            string sciezka_button = "img\\nc_play.png";
-
-            Bitmap bitmapButton = new Bitmap(sciezka_button);
-            Bitmap bitmapMain = getWindowSS("AION Launcher");
-
-            Rect window = new Rect();
-
-            GetWindowRect(pHwnd, ref window);
-
-            location = autoSearchBitmap(bitmapButton, bitmapMain);
-
-            button.x = (location.X + location.Width / 2) + window.left;
-            button.y = (location.Y + location.Height / 2) + window.top;
-            mouseClick(button.x, button.y);
-
-            if (location.X == 0 && location.Y == 0)
-            {
-                view.setLog("AION Launcher 'Run Game' not found", true);
-                return;
-            }
-
-            IntPtr hWnd = IntPtr.Zero;
-            string wName = "AION Client";
-            bool stopTrying = false;
-            DateTime time = DateTime.Now;
-
-            while (!stopTrying)
-            {
-                foreach (Process pList in Process.GetProcesses())
-                {
-                    if (pList.MainWindowTitle.Contains(wName))
-                    {
-                        hWnd = pList.MainWindowHandle;
-                        view.setLog("AION found", false);
-                        view.setGameWindow();
-                        stopTrying = true;
-                        return;
-                    }
-                }
-                if (DateTime.Now.Subtract(time).Milliseconds > 10000)
-                {
-                    stopTrying = true;
-                    view.setLog("AION not found - timeout", true);
-                    return;
-                }
-            }
-        }
 
         public static void inputLoginInfo(string login, string password, int char_position, string pin, IntPtr pHwnd)
         {

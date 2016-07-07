@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AionBot
+﻿namespace AionBot.Model
 {
-    public class Waypoint
+    public class WaypointModel
     {
         public string _id;
         public string _x;
@@ -17,7 +11,7 @@ namespace AionBot
         public string _rest;
         public string _rest_for;
 
-        public Waypoint(string id,string x,string y, string z,string collect,string fly_to,string rest,string rest_for)
+        public WaypointModel(string id,string x,string y, string z,string collect,string fly_to,string rest,string rest_for)
         {
             this._id = id;
             this._x = x;

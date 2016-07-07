@@ -88,21 +88,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoLogIn.cs" />
-    <Compile Include="CharacterControl.cs" />
-    <Compile Include="IMain.cs" />
-    <Compile Include="ReadMemory.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="ViewMain.cs">
+    <Compile Include="Control\AutoLogIn.cs" />
+    <Compile Include="Control\CharacterControl.cs" />
+    <Compile Include="Presenter\MainPresenter.cs" />
+    <Compile Include="View\IMain.cs" />
+    <Compile Include="Repository\ReadMemory.cs" />
+    <Compile Include="Model\Settings.cs" />
+    <Compile Include="View\ViewMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewMain.Designer.cs">
+    <Compile Include="View\ViewMain.Designer.cs">
       <DependentUpon>ViewMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Waypoint.cs" />
-    <EmbeddedResource Include="ViewMain.resx">
+    <Compile Include="Model\Waypoint.cs" />
+    <EmbeddedResource Include="View\ViewMain.resx">
       <DependentUpon>ViewMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -126,9 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
