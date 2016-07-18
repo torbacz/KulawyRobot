@@ -32,7 +32,6 @@
             this.timerReadMemory = new System.Windows.Forms.Timer(this.components);
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabLogin = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.gbAccount = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.lblPassword = new System.Windows.Forms.Label();
@@ -48,7 +47,6 @@
             this.cBCharacterPosition = new System.Windows.Forms.ComboBox();
             this.btnShowPathDialog = new System.Windows.Forms.Button();
             this.tBGamePath = new System.Windows.Forms.TextBox();
-            this.cbEnableAutoPin = new System.Windows.Forms.CheckBox();
             this.tbPin = new System.Windows.Forms.TextBox();
             this.tbPassword = new System.Windows.Forms.TextBox();
             this.tbLogin = new System.Windows.Forms.TextBox();
@@ -84,14 +82,14 @@
             this.btnRemoveWaypoint = new System.Windows.Forms.Button();
             this.btnAddWaypoint = new System.Windows.Forms.Button();
             this.dGVWaypoints = new System.Windows.Forms.DataGridView();
-            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCollect = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFly = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRest = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colRestFor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.X = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Y = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Z = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Collect = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fly_to = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rest = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rest_for = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabLogs = new System.Windows.Forms.TabPage();
             this.rtbLogs = new System.Windows.Forms.RichTextBox();
             this.timerAutoLogIn = new System.Windows.Forms.Timer(this.components);
@@ -126,7 +124,6 @@
             // 
             // tabLogin
             // 
-            this.tabLogin.Controls.Add(this.button1);
             this.tabLogin.Controls.Add(this.gbAccount);
             this.tabLogin.Controls.Add(this.gbGameLogin);
             this.tabLogin.Location = new System.Drawing.Point(4, 22);
@@ -136,15 +133,6 @@
             this.tabLogin.TabIndex = 0;
             this.tabLogin.Text = "Login";
             this.tabLogin.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(639, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // gbAccount
             // 
@@ -230,7 +218,6 @@
             this.gbGameLogin.Controls.Add(this.cBCharacterPosition);
             this.gbGameLogin.Controls.Add(this.btnShowPathDialog);
             this.gbGameLogin.Controls.Add(this.tBGamePath);
-            this.gbGameLogin.Controls.Add(this.cbEnableAutoPin);
             this.gbGameLogin.Controls.Add(this.tbPin);
             this.gbGameLogin.Controls.Add(this.tbPassword);
             this.gbGameLogin.Controls.Add(this.tbLogin);
@@ -289,6 +276,7 @@
             this.cBCharacterPosition.Name = "cBCharacterPosition";
             this.cBCharacterPosition.Size = new System.Drawing.Size(102, 21);
             this.cBCharacterPosition.TabIndex = 23;
+            this.cBCharacterPosition.SelectedIndexChanged += new System.EventHandler(this.cBCharacterPosition_SelectedIndexChanged);
             // 
             // btnShowPathDialog
             // 
@@ -309,16 +297,6 @@
             this.tBGamePath.TabIndex = 21;
             this.tBGamePath.Text = "F:\\GameforgeLive\\GameforgeLive.exe";
             // 
-            // cbEnableAutoPin
-            // 
-            this.cbEnableAutoPin.AutoSize = true;
-            this.cbEnableAutoPin.Location = new System.Drawing.Point(119, 74);
-            this.cbEnableAutoPin.Name = "cbEnableAutoPin";
-            this.cbEnableAutoPin.Size = new System.Drawing.Size(130, 17);
-            this.cbEnableAutoPin.TabIndex = 20;
-            this.cbEnableAutoPin.Text = "Enable auto PIN input";
-            this.cbEnableAutoPin.UseVisualStyleBackColor = true;
-            // 
             // tbPin
             // 
             this.tbPin.Location = new System.Drawing.Point(6, 71);
@@ -326,6 +304,7 @@
             this.tbPin.Size = new System.Drawing.Size(100, 20);
             this.tbPin.TabIndex = 19;
             this.tbPin.Text = "PIN";
+            this.tbPin.TextChanged += new System.EventHandler(this.tbPin_TextChanged);
             // 
             // tbPassword
             // 
@@ -335,6 +314,7 @@
             this.tbPassword.TabIndex = 18;
             this.tbPassword.Text = "Password";
             this.tbPassword.UseSystemPasswordChar = true;
+            this.tbPassword.TextChanged += new System.EventHandler(this.tbPassword_TextChanged);
             // 
             // tbLogin
             // 
@@ -343,6 +323,7 @@
             this.tbLogin.Size = new System.Drawing.Size(100, 20);
             this.tbLogin.TabIndex = 17;
             this.tbLogin.Text = "Login";
+            this.tbLogin.TextChanged += new System.EventHandler(this.tbLogin_TextChanged);
             // 
             // cbAutoLogIn
             // 
@@ -353,7 +334,7 @@
             this.cbAutoLogIn.TabIndex = 16;
             this.cbAutoLogIn.Text = "Enable auto log in";
             this.cbAutoLogIn.UseVisualStyleBackColor = true;
-            this.cbAutoLogIn.CheckedChanged += new System.EventHandler(this.cbAutoLogIn_CheckedChanged_1);
+            this.cbAutoLogIn.CheckedChanged += new System.EventHandler(this.cbAutoLogIn_CheckedChanged);
             // 
             // tabCharacter
             // 
@@ -514,7 +495,6 @@
             this.gbWaypoints.Controls.Add(this.textBoxX);
             this.gbWaypoints.Controls.Add(this.btnRemoveWaypoint);
             this.gbWaypoints.Controls.Add(this.btnAddWaypoint);
-            this.gbWaypoints.Enabled = false;
             this.gbWaypoints.Location = new System.Drawing.Point(762, 6);
             this.gbWaypoints.Name = "gbWaypoints";
             this.gbWaypoints.Size = new System.Drawing.Size(260, 322);
@@ -671,14 +651,14 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dGVWaypoints.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVWaypoints.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colID,
-            this.colX,
-            this.colY,
-            this.colZ,
-            this.colCollect,
-            this.colFly,
-            this.colRest,
-            this.colRestFor});
+            this.ID,
+            this.X,
+            this.Y,
+            this.Z,
+            this.Collect,
+            this.Fly_to,
+            this.Rest,
+            this.Rest_for});
             this.dGVWaypoints.Location = new System.Drawing.Point(8, 6);
             this.dGVWaypoints.Name = "dGVWaypoints";
             this.dGVWaypoints.ReadOnly = true;
@@ -686,55 +666,61 @@
             this.dGVWaypoints.Size = new System.Drawing.Size(750, 602);
             this.dGVWaypoints.TabIndex = 0;
             // 
-            // colID
+            // ID
             // 
-            this.colID.HeaderText = "ID";
-            this.colID.Name = "colID";
-            this.colID.ReadOnly = true;
-            this.colID.Width = 50;
+            this.ID.DataPropertyName = "_id";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
             // 
-            // colX
+            // X
             // 
-            this.colX.HeaderText = "X";
-            this.colX.Name = "colX";
-            this.colX.ReadOnly = true;
+            this.X.DataPropertyName = "_x";
+            this.X.HeaderText = "X";
+            this.X.Name = "X";
+            this.X.ReadOnly = true;
             // 
-            // colY
+            // Y
             // 
-            this.colY.HeaderText = "Y";
-            this.colY.Name = "colY";
-            this.colY.ReadOnly = true;
+            this.Y.DataPropertyName = "_y";
+            this.Y.HeaderText = "Y";
+            this.Y.Name = "Y";
+            this.Y.ReadOnly = true;
             // 
-            // colZ
+            // Z
             // 
-            this.colZ.HeaderText = "Z";
-            this.colZ.Name = "colZ";
-            this.colZ.ReadOnly = true;
+            this.Z.DataPropertyName = "_z";
+            this.Z.HeaderText = "Z";
+            this.Z.Name = "Z";
+            this.Z.ReadOnly = true;
             // 
-            // colCollect
+            // Collect
             // 
-            this.colCollect.HeaderText = "Collect";
-            this.colCollect.Name = "colCollect";
-            this.colCollect.ReadOnly = true;
-            this.colCollect.Width = 50;
+            this.Collect.DataPropertyName = "_collect";
+            this.Collect.HeaderText = "Collect";
+            this.Collect.Name = "Collect";
+            this.Collect.ReadOnly = true;
             // 
-            // colFly
+            // Fly_to
             // 
-            this.colFly.HeaderText = "Fly to";
-            this.colFly.Name = "colFly";
-            this.colFly.ReadOnly = true;
+            this.Fly_to.DataPropertyName = "_fly_to";
+            this.Fly_to.HeaderText = "Fly To";
+            this.Fly_to.Name = "Fly_to";
+            this.Fly_to.ReadOnly = true;
             // 
-            // colRest
+            // Rest
             // 
-            this.colRest.HeaderText = "Rest";
-            this.colRest.Name = "colRest";
-            this.colRest.ReadOnly = true;
+            this.Rest.DataPropertyName = "_rest";
+            this.Rest.HeaderText = "Rest";
+            this.Rest.Name = "Rest";
+            this.Rest.ReadOnly = true;
             // 
-            // colRestFor
+            // Rest_for
             // 
-            this.colRestFor.HeaderText = "Rest for (s)";
-            this.colRestFor.Name = "colRestFor";
-            this.colRestFor.ReadOnly = true;
+            this.Rest_for.DataPropertyName = "_rest_for";
+            this.Rest_for.HeaderText = "Rest For";
+            this.Rest_for.Name = "Rest_for";
+            this.Rest_for.ReadOnly = true;
             // 
             // tabLogs
             // 
@@ -798,14 +784,6 @@
         private System.Windows.Forms.RichTextBox rtbLogs;
         private System.Windows.Forms.TabPage tabWaypoints;
         private System.Windows.Forms.DataGridView dGVWaypoints;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colX;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colY;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colZ;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCollect;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFly;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRest;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colRestFor;
         private System.Windows.Forms.Timer timerAutoLogIn;
         private System.Windows.Forms.GroupBox gbAccount;
         private System.Windows.Forms.TextBox textBox2;
@@ -854,8 +832,14 @@
         private System.Windows.Forms.TextBox textBoxX;
         private System.Windows.Forms.Button btnRemoveWaypoint;
         private System.Windows.Forms.Button btnAddWaypoint;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox cbEnableAutoPin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn X;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Y;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Z;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Collect;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Fly_to;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rest;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rest_for;
     }
 }
 

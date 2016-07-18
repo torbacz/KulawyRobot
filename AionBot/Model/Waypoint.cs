@@ -1,15 +1,22 @@
-﻿namespace AionBot.Model
+﻿using System.ComponentModel;
+
+namespace AionBot.Model
 {
     public class WaypointModel
     {
-        public string _id;
-        public string _x;
-        public string _y;
-        public string _z;
-        public string _collect;
-        public string _fly_to;
-        public string _rest;
-        public string _rest_for;
+        public string _id { get; set; }
+        public string _x { get; set; }
+        public string _y { get; set; }
+        public string _z { get; set; }
+        public string _collect { get; set; }
+        public string _fly_to { get; set; }
+        public string _rest { get; set; }
+        public string _rest_for { get; set; }
+
+        public WaypointModel()
+        {
+
+        }
 
         public WaypointModel(string id,string x,string y, string z,string collect,string fly_to,string rest,string rest_for)
         {

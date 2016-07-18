@@ -60,7 +60,12 @@ namespace AionBot.Control
         {
             try
             {
-                Process.Start(path);
+                string _arg = @"-ip:79.110.83.80 -noweb -noauthgg -st -charnamemenu -ingamebrowser -webshopevent:6 -f2p -lbox -litelauncher -ncping -64 -nosatab /SessKey:"" /CompanyID:" + "11" +  "/ChannelGroupIndex:" + "- 1" + "-lang:PLK -litestep:9"; 
+                Process p = new Process();
+                p.StartInfo.FileName = path;
+                p.StartInfo.Arguments = _arg;
+                p.StartInfo.UseShellExecute = false;
+                p.Start();
             }
             catch
             {

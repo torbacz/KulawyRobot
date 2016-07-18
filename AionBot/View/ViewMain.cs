@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Xml;
+using AionBot.Model;
+using System.ComponentModel;
 
-//Otwieranie waypointów z pliku
 //Sprawdzanie przy autologowaniu czy dane zostały wprowadzone
 //Ulepszenie wyświetlania wartości na/obok progress barów
 //showpath dialog filtrowanie do aion'a
 //dokonczyc MVP
+
+
+//Poruszanie się postaci
+//Autologowanie
 
 namespace AionBot.View
 {
@@ -18,6 +22,8 @@ namespace AionBot.View
         public event Action SaveConfigFile;
         public event Action OpenConfigFile;
         public event Action FindGame;
+        public event Action<DataGridView> saveWaypointGrid;
+        public event Action openWaypointFile;
 
         public ViewMain()
         {
@@ -56,7 +62,7 @@ namespace AionBot.View
         public void setLog(string text, bool isError)
         {
             DateTime data = DateTime.Now;
-            string message = data.ToString() +": " + text + Environment.NewLine;
+            string message = string.Format("{0}: {1}{2}", data, text, Environment.NewLine);
 
             if (isError)
             {
@@ -102,11 +108,9 @@ namespace AionBot.View
             dGVWaypoints.Rows.Add(row);
         }
 
-
-
-
         private void btnSave_Click(object sender, EventArgs e)
         {
+            
             if (dGVWaypoints.RowCount == 0)
             {
                 MessageBox.Show("No data to save.");
@@ -115,52 +119,7 @@ namespace AionBot.View
 
             try
             {
-                List <Model.WaypointModel> waypointToSave = new List<Model.WaypointModel>();
-
-                for (int i = 0; i < dGVWaypoints.Rows.Count; i++)
-                {
-                    Model.WaypointModel cur_waypoint = new Model.WaypointModel(
-                        dGVWaypoints.Rows[i].Cells[0].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[1].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[2].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[3].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[4].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[5].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[6].Value.ToString(),
-                        dGVWaypoints.Rows[i].Cells[7].Value.ToString());
-                    waypointToSave.Add(cur_waypoint);
-                }
-                using (SaveFileDialog saveFile = new SaveFileDialog())
-                {
-                    saveFile.Filter = "XML files(.xml)|*.xml";
-                    saveFile.ShowDialog();
-                    using (XmlWriter writer = XmlWriter.Create(saveFile.FileName))
-                    {
-                        writer.WriteStartDocument();
-                        writer.WriteStartElement("Waypoints");
-
-                        foreach (Model.WaypointModel item in waypointToSave)
-                        {
-                            writer.WriteStartElement("waypoint");
-
-                            writer.WriteElementString("ID", item._id);
-                            writer.WriteElementString("X", item._x);
-                            writer.WriteElementString("Y", item._y);
-                            writer.WriteElementString("Z", item._z);
-                            writer.WriteElementString("Collect", item._collect);
-                            writer.WriteElementString("Fly", item._fly_to);
-                            writer.WriteElementString("Rest", item._rest);
-                            writer.WriteElementString("Rest_for", item._rest_for);
-
-                            writer.WriteEndElement();
-                        }
-
-                        writer.WriteEndElement();
-                        writer.WriteEndDocument();
-                    }
-                }
-                setLog("Waypoint file saved", false);
-                dGVWaypoints.Rows.Clear();
+                saveWaypointGrid(dGVWaypoints);
             }
             catch
             {
@@ -170,11 +129,8 @@ namespace AionBot.View
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-
+            openWaypointFile();
         }
-
-
 
         private void btnSaveConfig_Click(object sender, EventArgs e)
         {
@@ -186,32 +142,31 @@ namespace AionBot.View
             OpenConfigFile();
         }
 
-
         private void tbLogin_TextChanged(object sender, EventArgs e)
         {
-            Model.Settings.Instance.login = tbLogin.Text;
+            Settings.Instance.login = tbLogin.Text;
         }
 
         private void tbPassword_TextChanged(object sender, EventArgs e)
         {
-            Model.Settings.Instance.password = tbPassword.Text;
+            Settings.Instance.password = tbPassword.Text;
         }
 
         private void tbPin_TextChanged(object sender, EventArgs e)
         {
-            Model.Settings.Instance.PIN = Int32.Parse(tbPin.Text);
+            Settings.Instance.PIN = tbPin.Text;
         }
 
         private void cbAutoLogIn_CheckedChanged(object sender, EventArgs e)
         {
-            Model.Settings.Instance.EnableAutoLogIn = cbAutoLogIn.Checked;
+            Settings.Instance.EnableAutoLogIn = cbAutoLogIn.Checked;
             timerAutoLogIn.Enabled = cbAutoLogIn.Checked;
         }
 
 
         private void cBCharacterPosition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.Settings.Instance.charaterPosition = cBCharacterPosition.SelectedIndex;
+            Settings.Instance.charaterPosition = cBCharacterPosition.SelectedIndex;
         }
 
         private void btnFindGame_Click(object sender, EventArgs e)
@@ -221,7 +176,7 @@ namespace AionBot.View
 
         private void timerAutoLogIn_Tick(object sender, EventArgs e)
         {
-            AionBot.Control.AutoLogIn.startGame(tBGamePath.Text);
+            Control.AutoLogIn.startGame(tBGamePath.Text);
             timerAutoLogIn.Enabled = false;
         }
 
@@ -232,16 +187,6 @@ namespace AionBot.View
                 //jeżeli weryfikacja uzytkowniak sie powiedzie
                 gbGameLogin.Enabled = true;
             }
-            else
-            {
-                //MessageBox.Show("Username or password invalid");
-            }
-        }
-
-        private void cbAutoLogIn_CheckedChanged_1(object sender, EventArgs e)
-        {
-            timerAutoLogIn.Enabled = cbAutoLogIn.Checked;
-            btnFindGame.Enabled = !cbAutoLogIn.Checked;
         }
 
         public void setTimers(bool ReadMemory, bool AutoLogIn)
@@ -250,7 +195,7 @@ namespace AionBot.View
             timerReadMemory.Enabled = ReadMemory;
         }
 
-        public void setSettingsAfterLoadFromFile(string login, string password, int pin, int charPostion, string gamePath, bool autoLogIn)
+        public void setSettingsAfterLoadFromFile(string login, string password, string pin, int charPostion, string gamePath, bool autoLogIn)
         {
             tbLogin.Text = login;
             tbPassword.Text = password;
@@ -258,6 +203,13 @@ namespace AionBot.View
             cBCharacterPosition.SelectedIndex = charPostion;
             tBGamePath.Text = gamePath;
             cbAutoLogIn.Checked = autoLogIn;
+        }
+
+        public void fillWaypointGrid(List<WaypointModel> waypointList)
+        {
+            var _bindingList = new BindingList<WaypointModel>(waypointList);
+            dGVWaypoints.DataSource = _bindingList;
+
         }
     }
 }
